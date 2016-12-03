@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+group 'Database Util'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.json', name: 'json', version: '20160810'
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Title': 'MySQL Client', 'Version': version, 'Main-Class': 'com.nodeal.database.mysql.Client'
+
+    }
+
+    archiveName 'MySQL Client.jar'
+    dependsOn configurations.runtime
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory()? it: zipTree(it)
+        }
+    }
+}
